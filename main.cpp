@@ -1,12 +1,15 @@
 #include <iostream>
 
+#define PRINT(A) (std::cout << A)
 
 int main() {
+	PRINT(100);
+	
 
 	int b = 894277321;
 
 	b = 0xFF;
-	b &= ~(1 << 3);	//reset 3 bit
+	b &= ~(0x30 << 4);	//reset 3 bit
 	std::cout << std::hex << b << std::endl;
 	b |= (1 << 3);
 	std::cout << std::hex << b << std::endl;
