@@ -4,10 +4,6 @@
 int main() {
 
 	
-	int a = 1 >> 1;
-
-	std::cout << std::hex << a << std::endl;
-	return 0;
 
 	int b = 894277321;
 	int count = 0;
