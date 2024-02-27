@@ -27,6 +27,23 @@ void GetA_doitany(int a) {
 	std::cout << std::endl;
 }
 
+void test1(int b) {
+	std::cout << __func__ << " " << b+b << std::endl;
+}
+
+void test2(int b) {
+	std::cout << __func__ << " " << b << std::endl;
+}	
+
+void AnotherSwith(unsigned char a) {
+	void (*test[255])(int a);
+	for (int i = 0; i < 255; test[i++] = test1);
+
+	test[2] = test2;
+
+	test[a](a);
+
+}
 void BubbleSort(int* ar, int size) {
 	std::cout << "ona ploxo rabotaet " << __func__ << std::endl;
 }
@@ -69,6 +86,7 @@ void MergeSort(int*, int) {
 	std::cout << __func__ << std::endl;
 }
 
+int foo(char) { }
 
 int main(int argc, char** argv) {
 	int a = -1;
@@ -78,6 +96,7 @@ int main(int argc, char** argv) {
 		a = atoi(argv[1]);
 	}
 	GetA_doitany(a);
+	AnotherSwith(a);
 
 	void (*sorts[])(int*, int) = {SelectionSort, BubbleSort, QuickSort, MergeSort};
 	char* name_sorts[] = {"SelectionSort", "BubbleSort", "QuickSort", "MergeSort"};
