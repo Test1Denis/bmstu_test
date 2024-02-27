@@ -1,115 +1,59 @@
 #include <algorithm>
 #include <iostream>
-#include <stdlib.h>
-
-void GetA_doitany(int a) {
-	switch(a) {
-		case 0 :
-			std::cout << "hi " << std::hex << a;
-		break;
-		case 1 :
-			std::cout << "hello " << std::hex << a;
-		break;
-		
-		case 2 :
-		case 3 :
-		case 4 :
-		case 5 :
-			std::cout << "privet " << std::hex << a;
-		break;
-
-		default:
-			std::cout << "hren " << std::hex << a;
-		break;
-
-	}
-
-	std::cout << std::endl;
-}
-
-void test1(int b) {
-	std::cout << __func__ << " " << b+b << std::endl;
-}
-
-void test2(int b) {
-	std::cout << __func__ << " " << b << std::endl;
-}	
-
-void AnotherSwith(unsigned char a) {
-	void (*test[255])(int a);
-	for (int i = 0; i < 255; test[i++] = test1);
-
-	test[2] = test2;
-
-	test[a](a);
-
-}
-void BubbleSort(int* ar, int size) {
-	std::cout << "ona ploxo rabotaet " << __func__ << std::endl;
-}
-
-int GetMaxInd(const int* ar, int size) {
-	int indMax = 0;
-	
-	for (int i = 1; i < size; i++) {
-		indMax = (ar[i] < ar[indMax]) ? indMax : i;
-	}
-
-	return indMax;
-}
-
-void SelectionSort(int *ar, int size) {
-	std::cout << __FILE__ << " : " << __func__ << std::endl;
-	for (int i = 0; i < size; i++) {
-		int ind = GetMaxInd(&ar[i], size - i) + i;
-		std::swap(ar[ind], ar[i]);
-	}
-}
-
-void TestSort(void (*sort)(int*, int), const char* func_name) {
-	std::cout << func_name << " start test" << std::endl;
-	{
-		int ar[17] = {17,1,2,9,0,-1,6,6,2,8,7,3,6,6,6,9000, 9};
-		sort(ar, 17);
-		std::cout << std::dec << "\t\t";
-		for (int i = 0; i < 17; std::cout << ar[i++] << " ");
-		std::cout << std::endl;
-	}
-
-}
-
-void QuickSort(int*, int) {
-	std::cout << __func__ << std::endl;
-}
-
-void MergeSort(int*, int) {
-	std::cout << __func__ << std::endl;
-}
-
-int foo(char) { }
+#include <fstream>
 
 int main(int argc, char** argv) {
-	int a = -1;
-	if (argc > 1) {
-//		itoa -- convert integer to string
-//	atoi -- convert str to int
-		a = atoi(argv[1]);
-	}
-	GetA_doitany(a);
-	AnotherSwith(a);
 
-	void (*sorts[])(int*, int) = {SelectionSort, BubbleSort, QuickSort, MergeSort};
-	char* name_sorts[] = {"SelectionSort", "BubbleSort", "QuickSort", "MergeSort"};
-	for (int i = 0; i < 4; i++) {
-		TestSort(sorts[i], name_sorts[i]);
-	}
-/*
-	TestSort(SelectionSort, "SelectionSort");
-	TestSort(BubbleSort, "BubbleSort");
-	TestSort(QuickSort, "QuickSort");
-	TestSort(MergeSort, "MergeSort");
-*/
+	FILE* f = fopen("test_file", "w");
+
+	unsigned int* ar = new unsigned int [20] {1,2,3,4,5,6,7,8,9,10,1000,2000,3030,4040,5050,606060, 0xAABBCCDD, 0xFFF0000, 18, 19};	
 		
+	fwrite(ar, 20, 4, f);
+	fwrite(ar, 80, 1, f);
+	fwrite(ar, 1, 80, f);
+
+	delete [] ar;
+	fclose(f);
+
+	
+	f = fopen("parabolllla", "r");
+	char* strParabolllla = new char [20];
+	
+	while(fread(&strParabolllla[0], 20, 1, f) > 0x00) {
+		for (int i = 0; i < 20; std::cout << strParabolllla[i++]);
+	}	
+	std::cout << std::endl;
+
+	delete [] strParabolllla;
+	strParabolllla = nullptr;
+
+	fseek(f, 0x00, SEEK_SET);	//переместиться в начало файла....
+	
+	float x_read;
+	float y_read1, y_read2;
+
+	std::cout << "-------------------------" << std::endl;
+	while(fscanf(f, "%f\t%f\t%f\n", &x_read, &y_read1, &y_read2) > 0) {
+		std::cout << x_read << "\t" << y_read1 << "\t" << y_read2 << std::endl;
+	}
+
+		
+
+	fclose(f);
+	return 0;
+
+
+	float x = -2;
+	float y = x*x;
+	float step = 4.0/100.0;
+	for (int p = 0; p < 100; p++) {
+		fprintf(f, "%2.2f\t%2.8f\t%2.2f\n", x, y, y);
+		x += step;
+		y = x * x;
+	}
+
+	fclose(f);
+
     return 0;
 }
 
