@@ -32,7 +32,7 @@ void BubbleSort(int* ar, int size) {
 
 }
 
-int GetMaxInd(cosnt int* ar, int size) {
+int GetMaxInd(const int* ar, int size) {
 	int indMax = 0;
 	
 	for (int i = 1; i < size; i++) {
@@ -58,6 +58,14 @@ int main(int argc, char** argv) {
 		a = atoi(argv[1]);
 	}
 	GetA_doitany(a);
+
+	int ar[17] = {17,1,2,9,0,-1,6,6,2,8,7,3,6,6,6,9000, 9};
+	SelectionSort(&ar[0], 17);
+
+	std::cout << std::dec;
+
+	for (int i = 0; i < 17; std::cout << ar[i++] << " ");
+	std::cout << std::endl;
 		
     return 0;
 }
