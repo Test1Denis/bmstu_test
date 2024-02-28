@@ -16,28 +16,16 @@ int main(int argc, char** argv) {
 	fclose(f);
 
 	
-	f = fopen("parabolllla", "r");
-	char* strParabolllla = new char [20];
-	
-	while(fread(&strParabolllla[0], 20, 1, f) > 0x00) {
-		for (int i = 0; i < 20; std::cout << strParabolllla[i++]);
-	}	
-	std::cout << std::endl;
-
-	delete [] strParabolllla;
-	strParabolllla = nullptr;
-
-	fseek(f, 0x00, SEEK_SET);	//переместиться в начало файла....
-	
-	float x_read;
-	float y_read1, y_read2;
-
-	std::cout << "-------------------------" << std::endl;
-	while(fscanf(f, "%f\t%f\t%f\n", &x_read, &y_read1, &y_read2) > 0) {
-		std::cout << x_read << "\t" << y_read1 << "\t" << y_read2 << std::endl;
-	}
-
+	f = fopen("parabolllla", "a");
 		
+	int curr_pos = ftell(f);
+	std::cout << curr_pos << std::endl;
+	fseek(f, 0x00, SEEK_SET);
+	
+	curr_pos = ftell(f);
+	std::cout << curr_pos << std::endl;
+	fprintf(f, "prlilichnoe 2\n");
+
 
 	fclose(f);
 	return 0;
