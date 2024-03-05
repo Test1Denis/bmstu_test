@@ -1,6 +1,7 @@
 #include "sorts.h"
 
-void xz() {}
+int testVar;
+
 
 void stupidSort(int *ar, int size) {
 	std::cout << __func__ << std::endl;

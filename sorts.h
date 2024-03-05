@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+
 void stupidSort(int*, int);
 void QuickSort(int* ar, int size);
 

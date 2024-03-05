@@ -6,6 +6,15 @@
 
 #include "sorts.h"
 
+typedef struct Student {
+	int age;
+	char* name;
+	char* passport;
+	float averMark;
+}student, *pStudent, **ppStudent;
+
+typedef struct Student* pStudent;
+
 void CreateMatrix() {
 	char** matrix;
 
@@ -30,7 +39,9 @@ int GetFileSize(const char* fileName) {
 }
 
 int main(int argc, char** argv) {
+	pStudent temp; // stuct Student* temp;
 
+	ppStudent temp1;
 	stupidSort(nullptr, 100);
 	QuickSort(nullptr, 100);
 	
