@@ -11,9 +11,21 @@ typedef struct Student {
 	char* name;
 	char* passport;
 	float averMark;
+	Student();	//default constructor
+	Student(const char* passport, const char* name) {}
+	Student(const char* name) {}
+	Student(int age) {}
+	~Student();
 }student, *pStudent, **ppStudent;
 
-typedef struct Student* pStudent;
+Student::Student() {
+	std::cout << __func__ << std::endl;
+}
+
+Student::~Student() {
+	std::cout << __func__ << std::endl;
+}
+
 
 void CreateMatrix() {
 	char** matrix;
@@ -39,7 +51,17 @@ int GetFileSize(const char* fileName) {
 }
 
 int main(int argc, char** argv) {
-	pStudent temp; // stuct Student* temp;
+	ppStudent temp = new pStudent [16]; // stuct Student* temp;
+	for (int i = 0; i < 16; i++) {
+		temp[i] = new student();
+		temp[i]->name = new char [256];
+	}
+
+	for (int i = 0; i < 16; i++) {
+		delete temp[i];
+	}
+	delete [] temp;
+
 
 	ppStudent temp1;
 	stupidSort(nullptr, 100);
