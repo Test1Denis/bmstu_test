@@ -5,23 +5,63 @@
 //#include <string.h>
 
 
-char myStrg[256];
+void CreateMatrix() {
+	char** matrix;
+
+	int size_str = 10;
+	matrix = new char *[16];
+	for (int i = 0; i < 16; i++) {
+		matrix[i] = new char [size_str];
+		size_str += random() % 20;
+	}
+
+	//work....
+
+	for (int i = 0; i < 16; i++) {
+		delete [] matrix[i];
+	}
+	delete [] matrix;
+}
+
+int GetFileSize(const char* fileName) {
+
+	return -1;
+}
+
 
 int main(int argc, char** argv) {
+	FILE* f = fopen("temp_text", "r");
+
+	char* text = new char [1024];
+	
+	int size_file = fread(text, 1, 1024, f);
+	std::cout << "size file = " << size_file << " : " << text << std::endl;
+	
+	char* t = strtok(text, " .!;");
+	t[2] = 'X';
+	do { 
+
+		std::cout << t << std::endl;
+		t = strtok(nullptr, " .!;");
+
+	}while(t != nullptr);
+
+	delete [] text;
+
+	fclose(f);
+
+	return 0;
 
 	char* myStr = new char [256];
 	
-	strcpy(myStr, "123456098321");
-	strcpy(myStr, "test");
-	myStr[strlen(myStr)] = 0x33;
-
-	for (int i = 0; i < 256; myStrg[i] = myStrg[i] == 0x00 ? ' ' : myStrg[i], i++);
+	strncpy(myStr, "123456098321", 6);
+	strcat(myStr, "test");
 
 	size_t size_str = strlen(myStr);
-//	std::cout << myStr << " " << size_str << std::endl;
-	
-	size_str = strlen(myStrg);
-	std::cout << myStrg << " " << size_str << std::endl;
+	std::cout <<  size_str << " : " << myStr << std::endl;
+
+	int rescmp = strcmp("test", myStr);
+	std::cout << rescmp << std::endl;
 
     return 0;
 }
