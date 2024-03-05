@@ -4,6 +4,7 @@
 #include <cstring>
 //#include <string.h>
 
+#include "sorts.h"
 
 void CreateMatrix() {
 	char** matrix;
@@ -28,8 +29,11 @@ int GetFileSize(const char* fileName) {
 	return -1;
 }
 
-
 int main(int argc, char** argv) {
+
+	stupidSort(nullptr, 100);
+	QuickSort(nullptr, 100);
+	
 	FILE* f = fopen("temp_text", "r");
 
 	char* text = new char [1024];
