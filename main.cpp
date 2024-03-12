@@ -8,21 +8,33 @@
 
 typedef struct Student {
 	int age;
+	int colorEyes_;
 	char* name;
 	char* passport;
 	float averMark;
+
 	Student();	//default constructor
-	Student(const char* passport, const char* name) {}
-	Student(const char* name) {}
-	Student(int age) {}
+	Student(int colorEyes) : colorEyes_(colorEyes) {}
+	Student(int colorEyes, int age, const char* name, const char* passport, float avermark){
+		if (avermark == 5.0) {
+			colorEyes_ = 0xFF0000;	//red eyes...
+		}
+
+	}
+
 	~Student();
 }student, *pStudent, **ppStudent;
 
 Student::Student() {
+	name = new char [32];
+	passport = new char [64];
+	colorEyes_ = 0xFF00FF;
 	std::cout << __func__ << std::endl;
 }
 
 Student::~Student() {
+	delete [] name;
+	delete [] passport;
 	std::cout << __func__ << std::endl;
 }
 
@@ -53,8 +65,8 @@ int GetFileSize(const char* fileName) {
 int main(int argc, char** argv) {
 	ppStudent temp = new pStudent [16]; // stuct Student* temp;
 	for (int i = 0; i < 16; i++) {
-		temp[i] = new student();
-		temp[i]->name = new char [256];
+		temp[i] = new student(0xFF0000);
+		temp[i]->age = 25;
 	}
 
 	for (int i = 0; i < 16; i++) {
