@@ -4,7 +4,7 @@
 #include <cstring>
 #include <assert.h>
 //#include <string.h>
-
+#include <bitset>
 #include "sorts.h"
 #include "test.h"
 
@@ -110,39 +110,26 @@ void hard_function() {
 
 }
 
+union Numbers {
+	int num_i;
+	float num_f;
+};
+
 int main(int argc, char** argv) {
 	RUN_TEST(Test_checkSort);
 	RUN_TEST(Test_Sort);
 
-	return 0;
-	assert(10 == 10);
-	float temp = 9/10;
-	ASSERT_HINT(0.9 == temp, "compare 0.9 with 9/10");
-	ASSERT(0.9 == temp);
-	ASSERT_HINT(9/10 == temp, "compare 9/10 with 9/10");
+	Numbers temp;
+	temp.num_f = 72.9876120;
+	//temp.num_i |= (1 << 31);
 
-	std::cout << "all is okeushki..." << std::endl;
-	return 0;
+	std::cout << temp.num_f << " = " << temp.num_i << " " << std::bitset<32>(temp.num_i) << std::endl;
+	temp.num_i++;
+	std::cout << temp.num_f << " = " << temp.num_i << " " << std::bitset<32>(temp.num_i) << std::endl;
 
-	Test_Sort();	
+	int temp1 = (int)(temp.num_f);
+	std::cout << temp1 << std::endl;
 
-	const int SIZE = 10;
-	int ar[SIZE] = {1,-2,3,0,-1,6,21,2,1,7};
-
-
-	for (int i = 0; i < SIZE; std::cout << ar[i++] << " ");
-	std::cout << std::endl;
-
-	auto pf = [](int a, int b){ 
-		static int count = 0;
-		std::cout << count++ << " : " << a << " " << b << std::endl;
-		return a > b;
-	};
-
-	BubbleSort(ar, SIZE, pf ); 
-
-	for (int i = 0; i < SIZE; std::cout << ar[i++] << " ");
-	std::cout << std::endl;
 
     return 0;
 }

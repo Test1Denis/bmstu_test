@@ -24,9 +24,10 @@ void AssertEqual(int expression, int expression_true,
 				const std::string& str_expression, const std::string& str_expression_true);
 #define ASSERT_EQUAL(expr, expr_true)	AssertEqual(expr, expr_true, #expr, #expr_true)
 
+/*
 void AssertEqualHint(int expr, int expr_true, 
-				const std::string& str_expression, const std::string& str_expression_true, const std::string& hint);
+				const std::string& str_expression, const std::string& str_expression_true, const std::string& hint) {}
 #define ASSERT_EQUAL_HINT(expr, epxr_true, hint)	AssertEqualHint(expr, expr_true, #expr, #expr_true, #hint)
-											
+*/											
 
 #endif

@@ -32,7 +32,7 @@ void AssertArray(const int *array_in, const int *array_etalon, int size) {
 	ShowInfoTest();
 
 	for (int i = 0; i < size; i++) {
-		if (array[i] != array_etalon[i]) {
+		if (array_in[i] != array_etalon[i]) {
 			std::cout << " BAD";
 			std::cout << std::endl;
 			return;
