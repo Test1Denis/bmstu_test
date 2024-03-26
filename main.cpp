@@ -5,10 +5,10 @@
 //#include <string.h>
 
 
-char myStrg[256];
 
 int main(int argc, char** argv) {
 
+	char myStrg[256];
 	char* myStr = new char [256];
 	
 	strcpy(myStr, "123456098321");
