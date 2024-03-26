@@ -23,6 +23,7 @@ struct ParamAr {
 	int min;
 	int max;
 	double aver;
+	int size;
 
 	ParamAr();
 };
@@ -31,23 +32,28 @@ ParamAr::ParamAr() {
 	min = ~(1 << 31);	//here we will put maxima value of integer!!!
 	max = 1 << 31;		//here maxima value of integer is put
 	aver = 0;
+	size = -1;
 }
 
-ParamAr GetParamAr(const int* ar, size_t size) {
-	ParamAr param;
+ParamAr GetParamAr(const int* ar, size_t size, struct ParamAr param) {
+	param.size = size > param.size ? size : param.size;
+
+	if (size == 0) {
+		param.aver = (double)param.aver / (double)param.size;	
+		return param;
+	}	
 	
-//	for (int left = 0, right = size - 1; left < right; left++, right--) {}
+
 	auto getMin = [](int a, int b){ return a > b ? b : a; };
 	auto getMax = [](int a, int b){ return a > b ? a : b; };	// [](){};
 
-	for (int i = 0; i < size; i++) {
-		param.max = getMax(param.max, ar[i]);
-		param.min = getMin(param.min, ar[i]);
-		param.aver += (double)ar[i] / (double)size;
-		
-	}
+	param.max = getMax(param.max, ar[0]);
+	param.min = getMin(param.min, ar[0]);
+	param.aver += (double)ar[0];
 
-	return param;
+	ParamAr tempParam = GetParamAr(&ar[1], size-1, param);
+
+	return tempParam;
 }
 
 std::ostream& operator<<(std::ostream& out, const ParamAr& input) {
@@ -61,6 +67,8 @@ int main() {
 
 	int ar[10] = {1,2,3,4,-1,5,6,7,8,9};
 	std::cout << GetMin(ar, 10) << std::endl;
-	std::cout << GetParamAr(ar, 10);
+	ParamAr temp;
+	std::cout << GetParamAr(ar, 10, temp);
+	std::cout << std::endl;
 	return 0;
 }
