@@ -97,6 +97,7 @@ void Test_checkSort() {
 }
 
 
+<<<<<<< HEAD
 void Test_Sort() {
 	{
 		const int SIZE = 9;
@@ -124,15 +125,26 @@ void test1(char** t) {
 	char* t1 = new char [128];
 	*t = t1;
 }
+=======
+>>>>>>> bormatuxa1
 
 int main(int argc, char** argv) {
 	std::cout << __LINE__ << " " << __func__ << " " << __FILE__ << std::endl;
 	RUN_TEST(Test_checkSort);
 	RUN_TEST(Test_Sort);
 
+<<<<<<< HEAD
 	Numbers temp;
 	temp.num_f = 72.9876120;
 	//temp.num_i |= (1 << 31);
+=======
+	char myStrg[256];
+	char* myStr = new char [256];
+	
+	strcpy(myStr, "123456098321");
+	strcpy(myStr, "test");
+	myStr[strlen(myStr)] = 0x33;
+>>>>>>> bormatuxa1
 
 	std::cout << temp.num_f << " = " << temp.num_i << " " << std::bitset<32>(temp.num_i) << std::endl;
 	temp.num_i++;
