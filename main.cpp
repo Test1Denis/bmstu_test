@@ -115,7 +115,18 @@ union Numbers {
 	float num_f;
 };
 
+void test(char* t) {
+	char* t1 = new char [128];
+	t = t1;
+}
+
+void test1(char** t) {
+	char* t1 = new char [128];
+	*t = t1;
+}
+
 int main(int argc, char** argv) {
+	std::cout << __LINE__ << " " << __func__ << " " << __FILE__ << std::endl;
 	RUN_TEST(Test_checkSort);
 	RUN_TEST(Test_Sort);
 
