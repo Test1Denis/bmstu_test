@@ -5,70 +5,79 @@
 #include <string.h>
 #include <bitset>
 
+
+int binSearch(const int* array, size_t size, int element) {
 	
-int GetMin(const int* ar, int size) {
-
-	if (size == 1) {
-		return ar[0];
+	int central_element = array[size/2];
+	if (element == central_element) {
+		return size/2;
 	}
 
-	if (ar[0] > ar[size - 1]) {
-		return GetMin(&ar[1], size - 1);			
+	if (size <= 1) {
+		return -1;
 	}
-	return GetMin(ar, size-1);
+	
+	if (array[size/2] > element) {
+		int res = binSearch(array, size/2, element);
+		if (res < 0) {
+			return -1;
+		}
+		return res;
+	}
+
+	if (array[size/2] < element) {
+		int res = binSearch(&array[size/2], size - size/2, element);
+		return res < 0 ? -1 : res + size/2;
+	}
+
 }
-
-
-struct ParamAr {
-	int min;
-	int max;
-	double aver;
-	int size;
-
-	ParamAr();
-};
-
-ParamAr::ParamAr() {
-	min = ~(1 << 31);	//here we will put maxima value of integer!!!
-	max = 1 << 31;		//here maxima value of integer is put
-	aver = 0;
-	size = -1;
-}
-
-ParamAr GetParamAr(const int* ar, size_t size, struct ParamAr param) {
-	param.size = size > param.size ? size : param.size;
-
-	if (size == 0) {
-		param.aver = (double)param.aver / (double)param.size;	
-		return param;
+	
+void test_binSearch() {
+/*	{
+		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		std::cout << binSearch(ar, 20, 0) << std::endl;	
 	}	
-	
-
-	auto getMin = [](int a, int b){ return a > b ? b : a; };
-	auto getMax = [](int a, int b){ return a > b ? a : b; };	// [](){};
-
-	param.max = getMax(param.max, ar[0]);
-	param.min = getMin(param.min, ar[0]);
-	param.aver += (double)ar[0];
-
-	ParamAr tempParam = GetParamAr(&ar[1], size-1, param);
-
-	return tempParam;
-}
-
-std::ostream& operator<<(std::ostream& out, const ParamAr& input) {
-	out << " aver = " << input.aver 
-		<< " min = " << input.min 
-		<< " max = " << input.max << std::endl;
-	return out;
+	{
+		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		std::cout << binSearch(ar, 20, 21) << std::endl;	
+	}	
+*/
+/*
+	{
+		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		std::cout << binSearch(ar, 20, 1) << std::endl;	
+	}	
+	{
+		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		std::cout << binSearch(ar, 20, 2) << std::endl;	
+	}	
+	{
+		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		std::cout << binSearch(ar, 20, 3) << std::endl;	
+	}	
+	{
+		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		std::cout << binSearch(ar, 20, 4) << std::endl;	
+	}	
+*/
+	{
+		int ar[] = {1,2,3,4,5,6,7,8,9,11,11,12,13,14,15,16,17,18,19,20};
+		for (int i = 0; i < 22; i++) {
+			int index = binSearch(ar, 20, i);
+			std::cout << i << ": index =  " << index << " element = " << ar[index]  << std::endl;	
+		}
+	}	
+	{
+		std::cout << "---------------" << std::endl;
+		int ar[] = {1,5,5,5,5,5,5,8,9,10,10,13,13,15,15,15,17,18,19,20};
+		for (int i = 0; i < 22; i++) {
+			int index = binSearch(ar, 24, i);
+			std::cout << i << ": index =  " << index << " element = " << ar[index]  << std::endl;	
+		}
+	}	
 }
 
 int main() {
-
-	int ar[10] = {1,2,3,4,-1,5,6,7,8,9};
-	std::cout << GetMin(ar, 10) << std::endl;
-	ParamAr temp;
-	std::cout << GetParamAr(ar, 10, temp);
-	std::cout << std::endl;
+	test_binSearch();
 	return 0;
 }
