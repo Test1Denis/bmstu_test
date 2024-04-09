@@ -1,5 +1,5 @@
-all : main.o sorts.o test.o
-	g++ main.o sorts.o test.o -g
+all : main.o sorts.o test.o ring_buffer.o
+	g++ main.o sorts.o test.o ring_buffer.o -g
 
 
 main.o : main.cpp
@@ -11,6 +11,8 @@ sorts.o : sorts.cpp sorts.h
 test.o : test.cpp
 	g++ -c -g test.cpp
 
+ring_buffer.o : ring_buffer.cpp
+	g++ -c ring_buffer.cpp -g
 
 clean :
 	rm -rf *.o a.out

@@ -1,83 +1,72 @@
-#include <algorithm>
 #include <iostream>
-#include <fstream>
-#include <assert.h>
-#include <string.h>
-#include <bitset>
+#include "ring_buffer.h"
 
 
-int binSearch(const int* array, size_t size, int element) {
-	
-	int central_element = array[size/2];
-	if (element == central_element) {
-		return size/2;
-	}
+struct RingBuffer test_buf;
 
-	if (size <= 1) {
-		return -1;
-	}
-	
-	if (array[size/2] > element) {
-		int res = binSearch(array, size/2, element);
-		if (res < 0) {
-			return -1;
-		}
-		return res;
-	}
-
-	if (array[size/2] < element) {
-		int res = binSearch(&array[size/2], size - size/2, element);
-		return res < 0 ? -1 : res + size/2;
-	}
-
+int error_ok() {
+	std::cout << __LINE__ << " : " << __func__ << std::endl;
+	return ERROR_OK;
 }
-	
-void test_binSearch() {
-/*	{
-		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-		std::cout << binSearch(ar, 20, 0) << std::endl;	
-	}	
-	{
-		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-		std::cout << binSearch(ar, 20, 21) << std::endl;	
-	}	
-*/
+int error_empty() {
+	std::cout << __LINE__ << " : " << __func__ << std::endl;
+	return ERROR_EMPTY;
+}
+int error_full() {
+	std::cout << __LINE__ << " : " << __func__ << std::endl;
+	return ERROR_FULL;
+}
+int error_init() {
+	std::cout << __LINE__ << " : " << __func__ << std::endl;
+	return ERROR_INIT;
+}
+
+int (*process_error[4])() = {error_ok, error_empty, error_full, error_init};
+
+void test_ring_buffer() {
+
+	int i = 0;
+	int k = 0;
+	for (;; i++) {
+		if (process_error[ring_AddToEnd(&test_buf, i+1)]() != ERROR_OK) {
+			break;
+		}
 /*
-	{
-		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-		std::cout << binSearch(ar, 20, 1) << std::endl;	
-	}	
-	{
-		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-		std::cout << binSearch(ar, 20, 2) << std::endl;	
-	}	
-	{
-		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-		std::cout << binSearch(ar, 20, 3) << std::endl;	
-	}	
-	{
-		int ar[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-		std::cout << binSearch(ar, 20, 4) << std::endl;	
-	}	
+		switch (ring_AddToEnd(&test_buf, i+1)) {
+			case ERROR_EMPTY :
+			break;
+			case ERROR_FULL :
+			break;
+			case ERROR_OK :
+			break;
+			case ERROR_INIT :
+				std::cout << "not init" << std::endl;
+			break;
+		}
 */
-	{
-		int ar[] = {1,2,3,4,5,6,7,8,9,11,11,12,13,14,15,16,17,18,19,20};
-		for (int i = 0; i < 22; i++) {
-			int index = binSearch(ar, 20, i);
-			std::cout << i << ": index =  " << index << " element = " << ar[index]  << std::endl;	
-		}
-	}	
-	{
-		std::cout << "---------------" << std::endl;
-		int ar[] = {1,5,5,5,5,5,5,8,9,10,10,13,13,15,15,15,17,18,19,20};
-		for (int i = 0; i < 22; i++) {
-			int index = binSearch(ar, 24, i);
-			std::cout << i << ": index =  " << index << " element = " << ar[index]  << std::endl;	
-		}
-	}	
-}
+	}
 
+	std::cout << "count element = " << i << std::endl;
+	std::cout << "count element = " << test_buf.datalen_ << std::endl;
+
+	int element;
+	for (i = 0;; i++) {
+		if (ring_GetFromFront(&test_buf, &element) == ERROR_OK) {
+			std::cout << "element = " << element << std::endl;
+			continue;
+		}
+		std::cout << "error_empty" << std::endl;
+		break;
+	}
+
+}
 int main() {
-	test_binSearch();
-	return 0;
+
+//	ring_Init(&test_buf, 16);
+	test_ring_buffer();
+	std::cout << "---" << std::endl;
+	test_ring_buffer();
+
+	return 0;	
+
 }
