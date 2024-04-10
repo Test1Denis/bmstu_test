@@ -1,50 +1,60 @@
 #include "ring_buffer.h"
 
-
-void ring_Init(RingBuffer* buf, int size_ar) {
-	buf->ar_ = new int [size_ar];
-	buf->size_ar_ = size_ar;
-	buf->datalen_ = 0;
-	buf->ptrEnd_ = 6;
-	buf->ptrBegin_ = buf->ptrEnd_;
+RingBuffer::RingBuffer() {
+	ar_ = new int [16];
+	size_ar_ = 16;
+	datalen_ = 0;
+	ptrEnd_ = 6;
+	ptrBegin_ = ptrEnd_;
+	std::cout << __func__ << std::endl;
 }
 
-int ring_AddToEnd(RingBuffer* buf, int el) {
-	if (buf->ar_ == nullptr) {
-		return ERROR_INIT;
-	}
+RingBuffer::RingBuffer(int size_ar) : RingBuffer() {
+	size_ar_ = size_ar;
+	delete [] ar_;
+	ar_ = new int [size_ar_];
 
-	if (buf->datalen_ > buf->size_ar_ - 1) {
-		return ERROR_FULL;
-	}
+	std::cout << __func__ << std::endl;
+}	
 
-	buf->ar_[buf->ptrEnd_] = el;
-	buf->ptrEnd_++;
-	buf->datalen_++;
-	if (buf->ptrEnd_ > (buf->size_ar_ - 1)) {
-		buf->ptrEnd_ = 0;
-	}
-
-	return ERROR_OK;
+RingBuffer::~RingBuffer() {
+	delete [] ar_;
+	std::cout << __func__ << std::endl;
 }
 
-int ring_GetFromFront(RingBuffer* buf, int* el) {
-	if (buf->ar_ == nullptr) {
-		return ERROR_INIT;
+Error RingBuffer::ring_AddToEnd(int el) {
+	if (ar_ == nullptr) {
+		return Error::EMPTY;
 	}
 
-	if (buf->datalen_ == 0) {
-		return ERROR_EMPTY;
-	}
-	*el = buf->ar_[buf->ptrBegin_];
-	buf->ptrBegin_++;
-	buf->datalen_--;
-
-	if (buf->ptrBegin_ == buf->size_ar_) {
-		buf->ptrBegin_ = 0;
+	if (datalen_ > size_ar_ - 1) {
+		return Error::FULL;
 	}
 
-	return ERROR_OK;
+	ar_[ptrEnd_] = el;
+	ptrEnd_++;
+	datalen_++;
+	if (ptrEnd_ > (size_ar_ - 1)) {
+		ptrEnd_ = 0;
+	}
+
+	return Error::OK;
+}
+
+Error RingBuffer::ring_GetFromFront(int* el) {
+	if (datalen_ == 0) {
+		return Error::EMPTY;
+	}
+	*el = ar_[ptrBegin_];
+	ptrBegin_++;
+	datalen_--;
+
+	if (ptrBegin_ == size_ar_) {
+		ptrBegin_ = 0;
+	}
+
+	return Error::OK;
+
 }
 
 

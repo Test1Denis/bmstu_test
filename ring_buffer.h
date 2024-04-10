@@ -2,6 +2,7 @@
 #define _ring_buffer_
 
 #include <iostream>
+#include <cstring>
 
 #define ERROR_OK	0
 #define ERROR_FULL	1
@@ -15,16 +16,37 @@ enum class Error {
 	EMPTY = 2,
 };
 
-struct RingBuffer {
-	int* ar_ {nullptr};
-	int size_ar_ {-1};
-	int datalen_;
-	int ptrBegin_;
-	int ptrEnd_;
-};
+class RingBuffer {
+	private :
+		int* ar_;
+		int size_ar_;
+		int datalen_;
+		int ptrBegin_;
+		int ptrEnd_;
 
-void ring_Init(RingBuffer* buf, int size_ar);
-int ring_AddToEnd(RingBuffer* buf, int el);
-int ring_GetFromFront(RingBuffer* buf, int* el);
+	public :
+		RingBuffer();
+		RingBuffer(int size_ar);
+		~RingBuffer();
+	
+		Error ring_AddToEnd(int el);
+		Error ring_GetFromFront(int* el);
+
+		int getDatalen() const {
+			return datalen_;
+		}
+		void getSizeAr(int size) {
+			if (size < size_ar_) {
+				return;
+			}
+			int* ar_temp = new int [size_ar_];
+			memcpy(ar_temp, ar_, size_ar_ * sizeof(int));
+			delete [] ar_;
+			ar_ = new int [size];
+			memcpy(ar_, ar_temp, size_ar_ * sizeof(int));
+			delete [] ar_temp;
+			size_ar_ = size;
+		}
+};
 
 #endif
