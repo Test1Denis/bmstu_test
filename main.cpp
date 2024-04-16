@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ring_buffer.h"
 #include "filo_1.h"
+#include "linked_list.h"
 
 //template<typename T>
 template<class T>
@@ -34,7 +35,33 @@ class Filo1 {
 		}
 };
 
+void testLinkedList() {
+	LinkedList myList;
+
+	Data temp("temp 1");
+	
+	for (int i = 0; i < 10; i++) {
+		myList.Push(temp);
+	}
+
+	myList.ShowElements();
+
+	for (int i = 0; i < 15; i++) {
+		std::cout << i << " : ";
+		if (myList.Pull(&temp) == 0) {
+			std::cout << temp.str_ << std::endl; 
+			continue;
+		}
+		std::cout << " no element" << std::endl;
+
+				
+	}
+}
+
 int main() {
+	testLinkedList();
+	
+	return 0;
 	Filo1<char> tempFilo;
 	Filo1<double> tempFilo1;
 

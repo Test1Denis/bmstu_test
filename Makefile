@@ -1,5 +1,5 @@
-all : main.o sorts.o test.o ring_buffer.o filo_1.o
-	g++ main.o sorts.o test.o ring_buffer.o filo_1.o -g
+all : main.o sorts.o test.o ring_buffer.o filo_1.o linked_list.o
+	g++ main.o sorts.o test.o ring_buffer.o filo_1.o linked_list.o -g
 
 main.o : main.cpp
 	g++ -c main.cpp -g
@@ -15,6 +15,9 @@ ring_buffer.o : ring_buffer.cpp
 
 filo_1.o : filo_1.cpp
 	g++ -c filo_1.cpp -g
+
+linked_list.o : linked_list.cpp
+	g++ -c linked_list.cpp -g
 
 clean :
 	rm -rf *.o a.out
