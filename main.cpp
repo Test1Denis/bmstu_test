@@ -2,6 +2,7 @@
 #include "ring_buffer.h"
 #include "filo_1.h"
 
+//template<typename T>
 template<class T>
 class Filo1 {
 	private :
