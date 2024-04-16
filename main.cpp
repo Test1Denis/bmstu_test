@@ -1,56 +1,50 @@
 #include <iostream>
 #include "ring_buffer.h"
+#include "filo_1.h"
 
+template<class T>
+class Filo1 {
+	private :
+		T *ar;
+		size_t size;
+		size_t datalen;
+	public: 
+		Filo1() {
+			ar = new T [8];
+			size = 8;
+			datalen = 0;
+		}
+		~Filo1() {
+			delete [] ar;
+		}
+		int push(T el) {
+			if (datalen == size) {
+				return -1;
+			}	
+			ar[datalen++] = el;
+			return 0;
+		}
+		int pull(T* el) {
+			if (datalen == 0) {
+				return -1;
+			}
+			*el = ar[--datalen];
+			return 0;
+		}
+};
 
-
-int error_ok() {
-	std::cout << __LINE__ << " : " << __func__ << std::endl;
-	return ERROR_OK;
-}
-int error_empty() {
-	std::cout << __LINE__ << " : " << __func__ << std::endl;
-	return ERROR_EMPTY;
-}
-int error_full() {
-	std::cout << __LINE__ << " : " << __func__ << std::endl;
-	return ERROR_FULL;
-}
-int error_init() {
-	std::cout << __LINE__ << " : " << __func__ << std::endl;
-	return ERROR_INIT;
-}
-
-int (*process_error[4])() = {error_ok, error_empty, error_full, error_init};
-
-std::ostream& operator<<(std::ostream& out, const Error cur_er) {
-	out << " Error = ";
-	switch(cur_er) {
-		case Error::OK :
-			out << "OK";
-		break;
-		case Error::EMPTY :
-			out << "empty";
-		break;
-		case Error::FULL :
-			out << "full";
-		break;
-	}
-	out << std::endl;
-
-	return out;
-}
 int main() {
+	Filo1<char> tempFilo;
+	Filo1<double> tempFilo1;
 
-	class RingBuffer test_buf1;
-	
-	RingBuffer *test_buf2 = new RingBuffer(4);
+	class Filo xz_filo;
+	xz_filo.test();
+	xz_filo.test1();
 
-	for (int i = 0; i < 8; i++) {
-		std::cout << i << " : " << test_buf2->ring_AddToEnd(10);
-	}
+	tempFilo.push(10);
+	char temp1;	
+	tempFilo.pull(&temp1);
 
-	delete test_buf2;
 
-	std::cout << __LINE__ << std::endl;
 	return 0;	
 }
