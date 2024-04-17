@@ -2,6 +2,7 @@
 #include "ring_buffer.h"
 #include "filo_1.h"
 #include "linked_list.h"
+#include <cstdlib>
 
 //template<typename T>
 template<class T>
@@ -35,6 +36,7 @@ class Filo1 {
 		}
 };
 
+
 void testLinkedList() {
 	LinkedList myList;
 
@@ -42,10 +44,13 @@ void testLinkedList() {
 	
 	for (int i = 0; i < 10; i++) {
 		myList.Push(temp);
+		temp.str_[5] = (char)(i + 0x30);
+		
 	}
 
 	myList.ShowElements();
 
+	std::cout << "check pull function" << std::endl;
 	for (int i = 0; i < 15; i++) {
 		std::cout << i << " : ";
 		if (myList.Pull(&temp) == 0) {
@@ -53,8 +58,6 @@ void testLinkedList() {
 			continue;
 		}
 		std::cout << " no element" << std::endl;
-
-				
 	}
 }
 

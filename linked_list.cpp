@@ -77,8 +77,12 @@ int LinkedList::Pull(Data* data) {
 	strcpy(data->str_, CurrNode->data_->str_);
 
 	CurrNode = CurrNode->prev_;
+	if (CurrNode == nullptr) {
+		return 0;
+	}
 	if (CurrNode->next_ != nullptr) {
 		delete CurrNode->next_;
+		CurrNode->next_ = nullptr;
 	}
 	return 0;
 }
