@@ -46,6 +46,10 @@ class LinkedList {
 //		Node* Tail;
 		Node* CurrNode;
 		int countNodes;
+
+		void ShowElemFromTail(const Node* curNode) const;
+		Node* getNode(int numNode) const;
+
 	public :
 		LinkedList();
 		~LinkedList();
@@ -59,6 +63,9 @@ class LinkedList {
 		int DeleteNode(int numNode);
 		int SwapElement(int node1, int node2);
 		void ShowElements() const;
+
+		void ShowElementFromTail_asOneLL() const;
+		void getDataNode(int num_node, char* data) const;
 };
 
 

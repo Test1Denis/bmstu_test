@@ -88,4 +88,65 @@ int LinkedList::Pull(Data* data) {
 }
 
 
+void LinkedList::ShowElemFromTail(const Node* curNode) const {
+	static int countEl = 0;
+	if (curNode->next_ != nullptr) {
+		countEl++;
+		
+		std::cout << countEl-- << " " << curNode->data_->str_ << std::endl;
+		ShowElemFromTail(curNode->next_);
+	}
+
+}
+
+void LinkedList::ShowElementFromTail_asOneLL() const {
+	ShowElemFromTail(Head);	
+}
+
+
+int LinkedList::SwapElement(int node1, int node2) {
+	if (node1 < 1 || node2 < 1) {
+		std::cout << "check only more than 0" << std::endl;
+		return -1;
+	}
+
+	Node* nd1 = getNode(node1 - 1);
+	Node* nd2 = getNode(node2 - 1);	//bf3 = el3
+
+	Node* nd1_next = nd1->next_;
+	Node* nd1_next_next = nd1_next->next_;
+	Node* nd2_next = nd2->next_;
+	
+	nd1->next_ = nd2->next_;
+
+	nd1_next->next_ = nd2->next_->next_;
+	nd2->next_ = nd1_next;
+	nd2_next->next_ = nd1_next_next;
+
+
+
+	return 0;
+}
+
+
+Node* LinkedList::getNode(int numNode) const {
+	Node* temp = Head;
+
+	while(--numNode >= 0) {
+		temp = temp->next_;
+		if (temp == nullptr) {
+			return nullptr;
+		}
+	}
+	return temp;
+}
+
+void LinkedList::getDataNode(int num_node, char* data) const {
+	Node* temp = getNode(num_node);
+	if (temp == nullptr) {
+		data[0] = '\0';
+		return;
+	}
+	strcpy(data, temp->data_->str_); 
+}
 

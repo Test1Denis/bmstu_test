@@ -48,7 +48,26 @@ void testLinkedList() {
 		
 	}
 
+	std::cout << "swap" << std::endl;
 	myList.ShowElements();
+	std::cout << "----" << std::endl;
+	myList.SwapElement(2,3);
+	std::cout << "----" << std::endl;
+	myList.ShowElements();
+
+	return;
+
+	std::cout << "show el from tail" << std::endl;
+	myList.ShowElementFromTail_asOneLL();
+	std::cout << "----" << std::endl;
+
+	std::cout << "get element 0 " << std::endl;
+	char tempData[128];
+	myList.getDataNode(0, tempData);
+	std::cout << tempData << "\n----" << std::endl;
+	std::cout << "get element 19 " << std::endl;
+	myList.getDataNode(19, tempData);
+	std::cout << tempData << "\n----" << std::endl;
 
 	std::cout << "check pull function" << std::endl;
 	for (int i = 0; i < 15; i++) {
@@ -61,7 +80,9 @@ void testLinkedList() {
 	}
 }
 
-int main() {
+
+int main(int argc, char** argv) {
+
 	testLinkedList();
 	
 	return 0;
