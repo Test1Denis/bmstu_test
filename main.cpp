@@ -3,6 +3,7 @@
 #include "filo_1.h"
 #include "linked_list.h"
 #include <cstdlib>
+#include <chrono>
 
 //template<typename T>
 template<class T>
@@ -43,15 +44,15 @@ void testLinkedList() {
 	Data temp("temp 1");
 	
 	for (int i = 0; i < 10; i++) {
-		myList.Push(temp);
 		temp.str_[5] = (char)(i + 0x30);
+		myList.Push(temp);
 		
 	}
 
 	std::cout << "swap" << std::endl;
 	myList.ShowElements();
 	std::cout << "----" << std::endl;
-	myList.SwapElement(2,3);
+	myList.SwapElement(0,5);
 	std::cout << "----" << std::endl;
 	myList.ShowElements();
 
@@ -83,7 +84,17 @@ void testLinkedList() {
 
 int main(int argc, char** argv) {
 
+	const auto t1 = std::chrono::high_resolution_clock::now();	
 	testLinkedList();
+	const auto t2 = std::chrono::high_resolution_clock::now();
+
+	auto tim = t2 - t1;
+    const std::chrono::duration<double, std::milli> fp_ms = t2 - t1;
+	std::cout << fp_ms.count() << std::endl;
+
+//	std::cout << fp_ms << std::endl;
+	const auto int_ms = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+	std::cout << int_ms << std::endl;
 	
 	return 0;
 	Filo1<char> tempFilo;

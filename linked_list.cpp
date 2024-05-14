@@ -104,26 +104,46 @@ void LinkedList::ShowElementFromTail_asOneLL() const {
 }
 
 
-int LinkedList::SwapElement(int node1, int node2) {
-	if (node1 < 1 || node2 < 1) {
-		std::cout << "check only more than 0" << std::endl;
+int LinkedList::SwapElement(int node_a, int node_b) {
+
+	if (node_a == node_b) {
+		return 0;
+	}
+	if (node_a < 0 || node_b < 0) {
 		return -1;
 	}
 
-	Node* nd1 = getNode(node1 - 1);
-	Node* nd2 = getNode(node2 - 1);	//bf3 = el3
+	if (node_a > node_b) {
+		std::swap(node_a, node_b);
+	}
 
-	Node* nd1_next = nd1->next_;
-	Node* nd1_next_next = nd1_next->next_;
-	Node* nd2_next = nd2->next_;
+	/* ndX_m1 - minus 1, previous element
+	 * ndX_p1 - plus 1, next element
+	 * nda, ndb -- elements for swap
+	 */
+	Node* nda_m1 = getNode(node_a - 1);
+	Node* ndb_m1 = getNode(node_b - 1);	//bf3 = el3
 	
-	nd1->next_ = nd2->next_;
+	Node* ndb = ndb_m1->next_;
+	Node* nda = nda_m1->next_;
 
-	nd1_next->next_ = nd2->next_->next_;
-	nd2->next_ = nd1_next;
-	nd2_next->next_ = nd1_next_next;
+	if (node_a == 0) {
+		nda = nda_m1;
+	}
+	else {
+		nda_m1->next_ = ndb;
+	}
 
+	Node* ndb_p1 = ndb->next_;
 
+	if (nda != ndb_m1) {
+		ndb->next_ = nda->next_;
+		ndb_m1->next_ = nda;
+	}
+	else {
+		ndb->next_ = nda;
+	}
+	nda->next_ = ndb_p1;
 
 	return 0;
 }
