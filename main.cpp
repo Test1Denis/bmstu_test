@@ -4,6 +4,9 @@
 #include "linked_list.h"
 #include <cstdlib>
 #include <chrono>
+#include <vector>
+#include <list>
+#include <map>
 
 //template<typename T>
 template<class T>
@@ -81,8 +84,80 @@ void testLinkedList() {
 	}
 }
 
+template<class T>
+class T1 {
+	private :
+		std::vector<T> a;
+		T test[100];
+		
+	public :
+		T1() {
+			a.push_back(100);
+
+			a.push_back(101);
+		}
+		void showEl() const {
+			for (int i= 0; i < a.size(); i++) {
+				std::cout << a.at(i) << " ";
+			}
+			std::cout << std::endl;
+			
+		}
+		T& operator[](int index) {
+			return test[index];
+		}
+};
+
 
 int main(int argc, char** argv) {
+	std::map<char, char> brackets = {{'(',')'},{'[',']'},{'<','>'},{'{','}'}};
+	std::pair<char, char> temp1;
+
+	std::vector<std::pair<char,char>> temp123;
+	std::tuple<double, int, float, std::string, std::vector<int>, char> temp11;
+	char currentBracket = '(';
+
+	std::cout << currentBracket << " = " << brackets[currentBracket] << std::endl;
+
+	for (std::map<char,char>::iterator iter = brackets.begin(); iter != brackets.end(); iter++){
+		std::cout << iter->first << " " << iter->second << std::endl;
+	}
+
+
+
+	T1<int> temp_t1;
+	std::vector<int> t;
+	temp_t1[0] = 100;
+	std::cout << temp_t1[0] << std::endl;
+//	T1 temp_t1;
+//	temp_t1.showEl();
+	std::list<int> v1;	//<-- int ar[N];
+	std::array<int, 10> ar;
+	int ar1[10];
+
+	for (int i = 0; i < 15; i++) {
+		ar1[i] = 10;
+	}
+
+	v1.push_back(109);
+	v1.push_back(110);
+	v1.push_back(111);
+	
+/*
+	for (int i = 0; i < v1.size(); i++) {
+		std::cout << v1[i] << " ";
+		v1[i]++;
+	}
+
+	std::cout << std::endl;
+*/
+	for (std::list<int>::iterator iter = v1.begin(); iter != v1.end(); iter++) {
+		std::cout << *iter << " ";
+	}
+	std::cout << std::endl;
+
+
+	return 0;
 
 	const auto t1 = std::chrono::high_resolution_clock::now();	
 	testLinkedList();
